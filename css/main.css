@@ -252,9 +252,9 @@ Fontello Custom Font
 /* '' */
 
 
-/* 
+/*
 *
-* main.css 
+* main.css
 *
 */
 
@@ -290,7 +290,7 @@ body {
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
   padding: 20px 0px;
-  width: 200px;
+  width: 240px;
   border-radius: 6px;
   overflow: hidden;
   background: transparent;
@@ -303,7 +303,7 @@ body {
 }
 
 .effect.effect-5:before {
-  font-family: FontAwesome;
+  font-family: FontEllo;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -315,17 +315,27 @@ body {
   justify-content: center;
   position: absolute;
   top: 0;
-  left: 0px;
   height: 100%;
   width: 30px;
   background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 0 50% 50% 0;
   -webkit-transform: scale(0, 1);
   transform: scale(0, 1);
-  -webkit-transform-origin: left center;
-  transform-origin: left center;
   -webkit-transition: all 0.2s linear 0s;
   transition: all 0.2s linear 0s;
+}
+
+html[dir='ltr'] .effect.effect-5:before {
+  left: 0px;
+  border-radius: 0 50% 50% 0;
+  -webkit-transform-origin: left center;
+  transform-origin: left center;
+  }
+
+html[dir='rtl'] .effect.effect-5:before {
+  right: 0px;
+  border-radius: 50% 0 0 50%;
+  -webkit-transform-origin: right center;
+  transform-origin: right center;
 }
 
 .effect.effect-5:hover {
@@ -353,6 +363,7 @@ body {
 .header h3 {
   font-weight: 100;
   font-family: 'Raleway';
+  text-transform: uppercase;
   cursor: pointer;
 }
 
@@ -452,7 +463,14 @@ input[type=number]::-webkit-outer-spin-button {
 #js-convert-form a.btn {
   background: rgba(255, 255, 255, 0.1);
   border-color: transparent;
-  margin-left: 10px;
+}
+
+html[dir='ltr'] #js-convert-form a.btn {
+  margin-left: 5px;
+}
+
+html[dir='rtl'] #js-convert-form a.btn {
+  margin-right: 5px;
 }
 
 #js-convert-form a.btn:hover {
@@ -460,9 +478,14 @@ input[type=number]::-webkit-outer-spin-button {
   background: rgba(255, 255, 255, 0.3);
 }
 
-#js-convert-form a .flag-icon {
+html[dir='ltr'] #js-convert-form a .flag-icon {
   margin-right: 10px;
 }
+
+html[dir='rtl'] #js-convert-form a .flag-icon {
+  margin-left: 10px;
+}
+
 
 #favorite-btn:hover {
   background: green;
@@ -504,7 +527,16 @@ input[type=number]::-webkit-outer-spin-button {
   cursor: pointer;
 }
 
-.currency-label .flag-icon {
+html[dir='ltr'] .currency-label .flag-icon {
+  margin-right: 10px;
+}
+
+html[dir='rtl'] .currency-label .flag-icon {
+  margin-left: 10px;
+}
+
+span .flag-icon {
+  margin-left: 10px;
   margin-right: 10px;
 }
 
@@ -574,4 +606,79 @@ button.close {
 
 .show-favorites:before {
   content: "\f06e";
+}
+
+/* Language selector */
+#language-button {
+  background-color: rgba(255, 255, 255, 0.1);
+  position: absolute;
+  top: 0;
+  padding: 10px 15px 5px 15px;
+  cursor: pointer;
+  -webkit-transition: all 0.1s linear 0s;
+  transition: all 0.1s linear 0s;
+}
+
+html[dir='ltr'] #language-button {
+  right: 0;
+}
+
+html[dir='rtl'] #language-button {
+  left: 0;
+}
+
+#language-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+#language-list {
+  display: none;
+  background-color: rgba(255, 255, 255, 0.2);
+  position: absolute;
+  top: 3.25em;
+  padding: 0;
+  list-style-type: none;
+  z-index: 1;
+}
+
+html[dir='ltr'] #language-list {
+  right: 0;
+}
+
+html[dir='rtl'] #language-list {
+  left: 0;
+}
+
+#language-list li {
+  padding: 0.5em 0.75em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  -webkit-transition: all 0.1s linear 0s;
+  transition: all 0.1s linear 0s;
+  background: none;
+}
+
+#language-list li:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0);
+}
+
+#language-list li:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0);
+}
+
+.selected {
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  background-color: rgba(255, 255, 255, 0.2 ) !important;
+  -webkit-transition: all 0.1s linear 0s;
+  transition: all 0.1s linear 0s;
+
+}
+
+.selected:hover {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+h3 img {
+  opacity: 0.5;
 }

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "en",
+    "file": "en.json",
+    "name": "English"
+  },
+
+  {
+    "id": "pt-BR",
+    "file": "pt_BR.json",
+    "name": "Português Brasileiro"
+  },
+
+  {
+    "id": "ar",
+    "file": "ar.json",
+    "name": "العربية"
+  }
+
+]

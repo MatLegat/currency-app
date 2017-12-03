@@ -1,25 +1,26 @@
-<!-- 
+<!--
 
- _______       ___       __  ___      _______. __    __  
-|       \     /   \     |  |/  /     /       ||  |  |  | 
-|  .--.  |   /  ^  \    |  '  /     |   (----`|  |__|  | 
-|  |  |  |  /  /_\  \   |    <       \   \    |   __   | 
-|  '--'  | /  _____  \  |  .  \  .----)   |   |  |  |  | 
-|_______/ /__/     \__\ |__|\__\ |_______/    |__|  |__| 
-                                                         
+ _______       ___       __  ___      _______. __    __
+|       \     /   \     |  |/  /     /       ||  |  |  |
+|  .--.  |   /  ^  \    |  '  /     |   (----`|  |__|  |
+|  |  |  |  /  /_\  \   |    <       \   \    |   __   |
+|  '--'  | /  _____  \  |  .  \  .----)   |   |  |  |  |
+|_______/ /__/     \__\ |__|\__\ |_______/    |__|  |__|
+
 This project was made by Daksh Shah. You can read more about him at https://daksh.me
 
 -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>Currency Central</title>
+  <title data-i18n="cc-title">Currency Central</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css?family=Raleway:100,300|Source+Code+Pro" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
+
 </head>
 
 <body>
@@ -28,8 +29,15 @@ This project was made by Daksh Shah. You can read more about him at https://daks
     <!-- Permanent header -->
     <div class="row header text-center">
       <div class="col">
-        <h3>CURRENCY CENTRAL</h3>
+        <h3 data-i18n="cc-title"></h3>
       </div>
+      <!-- Language selector -->
+      <div id="language-button">
+        <h3 id="globe">
+          <img src="img/globe.svg">
+        </h3>
+      </div>
+      <ul id="language-list"></ul>
     </div>
     <!-- Introduction screen -->
     <section id="intro">
@@ -40,13 +48,13 @@ This project was made by Daksh Shah. You can read more about him at https://daks
       </div>
       <div class="row">
         <div class="col text-center">
-          <p>This is Currency Central. The one stop solution for all your currency needs.</p>
+          <p data-i18n="cc-intro"></p>
         </div>
       </div>
       <div class="row">
         <div class="col text-center">
-          <button class="btn btn-primary convert-btn effect effect-5">Convert Currencies</button>
-          <button class="btn btn-primary show-favorites effect effect-5">Favorite Currencies</button>
+          <button class="btn btn-primary convert-btn effect effect-5" data-i18n="cc-convert-btn"></button>
+          <button class="btn btn-primary show-favorites effect effect-5" data-i18n="cc-see-fav-btn"></button>
         </div>
       </div>
     </section>
@@ -56,14 +64,14 @@ This project was made by Daksh Shah. You can read more about him at https://daks
         <div class="col">
           <form id="js-convert-form">
             <div class="form-group">
-              <input type="number" name="from-entry" id="from-entry" placeholder="e.g. 250" required>
+              <input type="number" name="from-entry" id="from-entry" data-i18n="[placeholder]cc-example" required>
             </div>
             <div class="form-group">
-                <label for="convert-from-currency"><strong>From —</strong></label>
+                <label for="convert-from-currency"><strong><spam data-i18n="cc-from"></spam> —</strong></label>
                 <a href="#" class="btn btn-primary btn-from-currency" data-toggle="modal" data-target=".from-currency-modal"><span class="flag-icon flag-icon-au"></span>AUD</a>
             </div>
             <div class="form-group">
-              <label for="convert-to-currency"><strong>To —</strong></label>
+              <label for="convert-to-currency"><strong><spam data-i18n="cc-to"></spam> —</strong></label>
               <a href="#" class="btn btn-primary btn-to-currency" data-toggle="modal" data-target=".to-currency-modal"><span class="flag-icon flag-icon-au"></span>AUD</a>
             </div>
           </form>
@@ -280,15 +288,15 @@ This project was made by Daksh Shah. You can read more about him at https://daks
     <section id="results" hidden>
       <div class="row text-center">
         <div class="col">
-          <p class="result-1"><span class="from-value"></span> <span class="from-currency"></span> equals</p>
-          <p class="result-2"><strong><span class="to-value"></span> <span class="to-currency"></span></strong></p>
+          <p class="result-1" id="from-result"></p>
+          <p class="result-2" id="to-result"></p>
         </div>
       </div>
       <div class="row text-center">
         <div class="col">
           <p id="success-message"></p>
-          <button class="btn btn-primary effect effect-5" id="favorite-btn">Add to favorites</button>
-          <button class="btn btn-primary show-favorites effect effect-5">See favorites</button>
+          <button class="btn btn-primary effect effect-5" id="favorite-btn" data-i18n="cc-add-fav-btn"></button>
+          <button class="btn btn-primary show-favorites effect effect-5" data-i18n="cc-see-fav-btn"></button>
         </div>
       </div>
     </section>
@@ -304,14 +312,23 @@ This project was made by Daksh Shah. You can read more about him at https://daks
       </div>
       <div class="row text-center">
         <div class="col">
-          <button class="btn btn-primary convert-btn effect effect-5">Convert Currencies</button>
-          <button class="btn btn-primary effect effect-5" id="delete-favorites">Delete all favorites</button>
+          <button class="btn btn-primary convert-btn effect effect-5" data-i18n="cc-convert-btn"></button>
+          <button class="btn btn-primary effect effect-5" id="delete-favorites" data-i18n="cc-delete-fav-btn"></button>
         </div>
       </div>
     </section>
   </div>
   <!-- Include scripts -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="js/lib/jquery.min.js"></script>
+  <script src="js/lib/tether.min.js"></script>
+  <script src="js/lib/CLDRPluralRuleParser.js"></script>
+  <script src="js/lib/jquery.i18n/jquery.i18n.js"></script>
+  <script src="js/lib/jquery.i18n/jquery.i18n.messagestore.js"></script>
+  <script src="js/lib/jquery.i18n/jquery.i18n.fallbacks.js"></script>
+  <script src="js/lib/jquery.i18n/jquery.i18n.language.js"></script>
+  <script src="js/lib/jquery.i18n/jquery.i18n.parser.js"></script>
+  <script src="js/lib/jquery.i18n/jquery.i18n.emitter.js"></script>
+  <script src="js/lib/jquery.i18n/jquery.i18n.emitter.bidi.js"></script>
   <script src="js/bootstrap.js"></script>
   <script src="js/app.js"></script>
 </body>

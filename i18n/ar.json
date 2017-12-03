@@ -1,0 +1,13 @@
+{
+  "dir": "rtl",
+
+  "cc-title": "العملة المركزية",
+  "cc-convert-btn": "تحويل العملات",
+  "cc-see-fav-btn": "العملات المفضلة",
+  "cc-delete-fav-btn": "حذف جميع المفضلة",
+  "cc-add-fav-btn": "اضافة الى المفضلة",
+  "cc-from": "من ",
+  "cc-to": "إلى ",
+  "cc-equals-value": "$2 {{PLURAL:$1|يساوي|يساوي}}"
+
+}

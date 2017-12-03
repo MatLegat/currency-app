@@ -6,39 +6,6 @@
 
 // object to handle currency acronyms
 var currencies = {
-    fullForm: {
-        AUD: "Australian Dollar",
-        BGN: "Bulgarian Lev",
-        BRL: "Brazilian Real",
-        CAD: "Canadian Dollar",
-        CHF: "Swiss Frank",
-        CNY: "Chinese Yuan",
-        CZK: "Czech Republic Koruna",
-        DKK: "Danish Krone",
-        GBP: "British Pound",
-        HKD: "Hong Kong Dollar",
-        HRK: "Croatian Kuna",
-        HUF: "Hungarian Forint",
-        IDR: "Indonesian Rupiah",
-        ILS: "Israeli New Shekel",
-        INR: "Indian Rupee",
-        JPY: "Japanese Yen",
-        KRW: "South Korean Won",
-        MXN: "Mexican Peso",
-        MYR: "Malaysian Ringgit",
-        NOK: "Norwegian Krone",
-        NZD: "New Zealand Dollar",
-        PHP: "Philippine Peso",
-        PLN: "Polish Zloty",
-        RON: "Romanian Leu",
-        RUB: "Russian Ruble",
-        SEK: "Swedish Krona",
-        SGD: "Singapore Dollar",
-        THB: "Thai Baht",
-        TRY: "Turkish Lira",
-        USD: "US Dollar",
-        ZAR: "South African Rand"
-    },
     fromCurr: "AUD",
     toCurr: "AUD"
 }
@@ -84,7 +51,7 @@ function generateFavoritesList() {
     // append each favorite to list item
     list.empty().each(function(i) {
         for (var x = 0; x < favorites.length; x++) {
-            $(this).append('<li>' + favorites[x][0] + ' to ' + favorites[x][1] + '<i class="icon-trash-empty delete-icon" aria-hidden="true"></i></li>');
+            $(this).append('<li>' + $.i18n('cc-to-currency', favorites[x][0], favorites[x][1]) + '<i class="icon-trash-empty delete-icon" aria-hidden="true"></i></li>');
             if (x == favorites.length - 1) {
                 $(this).appendTo(listParent);
             }
@@ -93,9 +60,9 @@ function generateFavoritesList() {
 
     // show number of favorites in list
     if (favorites.length === 0) {
-        $('.favorites-message').text("Looks like you have no favorites saved. You can add new favorites while converting currencies!");
+        $('.favorites-message').text($.i18n("cc-no-fav"));
     } else {
-        $('.favorites-message').text("You currently have " + favorites.length + " favorites saved.");
+        $('.favorites-message').text($.i18n("cc-fav-count", favorites.length));
     }
 }
 
@@ -104,16 +71,16 @@ function updateResults() {
     var fromCurr = currencies.fromCurr;
     var toCurr = currencies.toCurr;
 
-    var fromAmount = $('#from-entry').val();
-    var converted = fx.convert(fromAmount, {from: fromCurr, to: toCurr}).toFixed(2);
+    var formatter = Intl.NumberFormat($.i18n().locale, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+    var fromAmount = formatter.format($('#from-entry').val());
+    var converted = formatter.format(fx.convert(parseFloat(fromAmount), {from: fromCurr, to: toCurr}));
 
     $('#success-message').empty();
     if (fromAmount !== "") {
         $('#results').removeAttr('hidden');
-        $('.from-value').text(fromAmount);
-        $('.from-currency').text(currencies.fullForm[fromCurr]);
-        $('.to-value').text(converted);
-        $('.to-currency').text(currencies.fullForm[toCurr]);
+        $('#from-result').text($.i18n('cc-equals-value', fromAmount, $.i18n(fromCurr, fromAmount)));
+        $('#to-result').text($.i18n(toCurr, converted));
     } else {
         $('#results').attr('hidden', true);
     }
@@ -142,7 +109,7 @@ $(function() {
     });
 
     // go back to landing page on header click
-    $('.header h3').click(function() {
+    $('.header h3').not('#globe').click(function() {
         $('#conversion').attr('hidden', true);
         $('#favorites').attr('hidden', true);
         $('#results').attr('hidden', true);
@@ -176,9 +143,9 @@ $(function() {
         // check if item already exists in favorites
         if (searchForArray(favorites, [fromCurr, toCurr]) === -1) {
             favorites.push([fromCurr, toCurr]);
-            $('#success-message').html('<i style="color: green" class="icon-ok-circled" aria-hidden="true"></i>       ' + fromCurr + ' to ' + toCurr + ' added to favorites.');
+            $('#success-message').html('<i style="color: green" class="icon-ok-circled" aria-hidden="true"></i>       ' + $.i18n('cc-fav-added', fromCurr, toCurr));
         } else {
-            $('#success-message').html('<i style="color: red" class="icon-cancel" aria-hidden="true"></i>       ' + 'Bam, this favorite already exists!');
+            $('#success-message').html('<i style="color: red" class="icon-cancel" aria-hidden="true"></i>       ' + $.i18n('cc-fav-exists'));
         }
         setTimeout(function() {
             $('#success-message').fadeOut('fast');
@@ -201,4 +168,55 @@ $(function() {
         localStorage.setItem("favorites", JSON.stringify(favorites));
     });
 
+    // language selector
+    $.ajax({
+        dataType: "json",
+        url: "i18n/available_languages.json",
+        mimeType: "application/json",
+        success: function(result){
+            var userLang = localStorage.getItem("lang") || navigator.language || navigator.userLanguage;
+            var languageSet = false;
+            $.i18n().locale = 'en';
+            result.forEach(function(language) {
+                $('#language-list').append(
+                    $('<li>')
+                    .attr('id', language.id)
+                    .attr('onclick', 'setLanguage("' + language.id + '")')
+                    .append(
+                        language.name
+                    )
+                );
+                $.i18n().load({
+                    [language.id]: ("i18n/" + language.file)
+                }).done(function() {
+                    if (language.id == userLang || (language.id == 'en' && $.i18n().locale == 'en')) {
+                        setLanguage(language.id);
+                    }
+                });
+            });
+        }
+    });
+
+    $('#language-button').click(function() {
+        if ($('#language-list').css('display') == 'none') {
+            $('#language-list').show(200);
+        } else {
+            $('#language-list').hide(200);
+        }
+    });
+
 });
+
+function setLanguage(id) {
+    localStorage.setItem('lang', id);
+    $.i18n().locale = id;
+    $('html').attr('lang', id);
+    $('html').i18n();
+    $('html').attr('dir', $.i18n('dir'));
+    $('#language-list').hide(200);
+    $('.selected').removeClass('selected');
+    $('#language-list #' + id).addClass('selected');
+    if (!$('#results').attr('hidden')) {
+        updateResults();
+    }
+}
