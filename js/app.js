@@ -74,7 +74,7 @@ function updateResults() {
     var formatter = Intl.NumberFormat($.i18n().locale, {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
     var fromAmount = formatter.format($('#from-entry').val());
-    var converted = formatter.format(fx.convert(parseFloat(fromAmount), {from: fromCurr, to: toCurr}));
+    var converted = formatter.format(fx.convert($('#from-entry').val(), {from: fromCurr, to: toCurr}));
 
     $('#success-message').empty();
     if (fromAmount !== "") {
