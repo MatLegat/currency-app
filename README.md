@@ -1,6 +1,7 @@
 # Currency App
 
 A simple currency app built using the [Fixer.io](http://fixer.io/) API.
+Internationalized version.
 
 ## Live Demo
 
@@ -24,6 +25,7 @@ The project attempts to satisfactorily fulfill the following user stories:
 * [Bootstrap v4.0.0-alpha.6](https://v4-alpha.getbootstrap.com/)
 * JavaScript
 * [jQuery](http://jquery.com/)
+* [jQuery-i18n](https://github.com/recurser/jquery-i18n)
 
 ## Thanks
 
